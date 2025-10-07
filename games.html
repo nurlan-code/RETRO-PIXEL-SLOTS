@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games - Retro Pixel Slots</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(0, 255, 0, .05) 25%, rgba(0, 255, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, .05) 75%, rgba(0, 255, 0, .05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(0, 255, 0, .05) 25%, rgba(0, 255, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, .05) 75%, rgba(0, 255, 0, .05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            padding: 1.5rem;
+            border-bottom: 3px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+            50% { text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #00ff00;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00ff00;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            text-shadow: 0 0 10px #00ff00;
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-size: 1.5rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            text-shadow: 0 0 20px #00ff00;
+            margin-bottom: 1rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: transparent;
+            color: #00ff00;
+            text-decoration: none;
+            border: 2px solid #00ff00;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: #00ff00;
+            color: #0a0a0a;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .coming-soon-container {
+            max-width: 1000px;
+            margin: 4rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .coming-soon-box {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 5px solid #00ff00;
+            padding: 5rem 3rem;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coming-soon-box::before {
+            content: '🎮🎰👾🕹️💎🎲';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10rem;
+            opacity: 0.05;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .coming-soon-icon {
+            font-size: 8rem;
+            margin-bottom: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .coming-soon-box h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px #00ff00;
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-3px, 3px); }
+            94% { transform: translate(3px, -3px); }
+            96% { transform: translate(-3px, -3px); }
+        }
+
+        .coming-soon-box p {
+            font-size: 1.4rem;
+            color: #88ff88;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            padding: 2rem;
+        }
+
+        .preview-card {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+
+        .preview-card:hover {
+            background: rgba(0, 255, 0, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+        }
+
+        .preview-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .preview-card h3 {
+            color: #66ff66;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .preview-card p {
+            color: #88ff88;
+            font-size: 1rem;
+        }
+
+        .countdown {
+            background: linear-gradient(90deg, #00ff00 0%, #66ff66 100%);
+            color: #0a0a0a;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 3rem auto;
+            max-width: 600px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+        }
+
+        .countdown h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .countdown-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .notify-section {
+            margin-top: 3rem;
+        }
+
+        .notify-input {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .notify-input input {
+            padding: 1rem;
+            background: #0a0a0a;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            border-radius: 5px;
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+        }
+
+        .notify-input input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+        }
+
+        .notify-button {
+            padding: 1rem 2rem;
+            background: #00ff00;
+            color: #0a0a0a;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .notify-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border-top: 3px solid #00ff00;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #66ff66;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .footer-text {
+            color: #88ff88;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: #1a1a1a;
+                padding: 1rem;
+                border-top: 2px solid #00ff00;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .coming-soon-box {
+                padding: 3rem 2rem;
+            }
+
+            .coming-soon-icon {
+                font-size: 5rem;
+            }
+
+            .coming-soon-box h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .feature-preview {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🎰 RETRO PIXEL SLOTS</div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="games.html">GAMES</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+                <li><a href="responsible.html">PLAY SAFE</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>🎮 GAMES COLLECTION 🎮</h1>
+        <p style="color: #66ff66; font-size: 1.2rem;">Exciting games coming soon!</p>
+        <a href="index.html" class="back-button">← BACK TO HOME</a>
+    </section>
+
+    <div class="coming-soon-container">
+        <div class="coming-soon-box">
+            <div class="coming-soon-icon">🚀</div>
+            <h2>COMING SOON!</h2>
+            <p>
+                We're working hard to bring you an amazing collection of demo casino games. Our team is developing exciting slot machines, card games, and more entertainment options!
+            </p>
+            <p>
+                Stay tuned for the launch of our full game library. Remember, all games will be 100% free with no real money involved!
+            </p>
+            
+            <div class="countdown">
+                <h3>⏰ LAUNCHING SOON</h3>
+                <p class="countdown-text">New games added regularly!</p>
+            </div>
+
+            <div class="feature-preview">
+                <div class="preview-card">
+                    <div class="preview-icon">🎰</div>
+                    <h3>CLASSIC SLOTS</h3>
+                    <p>Retro-style slot machines</p>
+                </div>
+                <div class="preview-card">
+                    <div class="preview-icon">🃏</div>
+                    <h3>CARD GAMES</h3>
+                    <p>Poker, Blackjack & more</p>
+                </div>
+                <div class="preview-card">
+                    <div class="preview-icon">🎲</div>
+                    <h3>DICE GAMES</h3>
+                    <p>Roll the dice for fun</p>
+                </div>
+                <div class="preview-card">
+                    <div class="preview-icon">🎯</div>
+                    <h3>SPECIALTY</h3>
+                    <p>Unique game experiences</p>
+                </div>
+            </div>
+
+            <div class="notify-section">
+                <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">Get Notified When We Launch!</h3>
+                <form class="notify-input" onsubmit="handleNotify(event)">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="notify-button">NOTIFY ME</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="responsible.html">Responsible Gaming</a>
+        </div>
+        <div class="footer-text">
+            <p>© 2025 Retro Pixel Slots - Demo Entertainment Platform</p>
+            <p>⚠️ No Real Money Involved | For Entertainment Only | 18+ ⚠️</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        function handleNotify(event) {
+            event.preventDefault();
+            alert('🎉 Thank you! We\'ll notify you when games are available!');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
