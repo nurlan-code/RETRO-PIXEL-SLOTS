@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Retro Pixel Slots</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(0, 255, 0, .05) 25%, rgba(0, 255, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, .05) 75%, rgba(0, 255, 0, .05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(0, 255, 0, .05) 25%, rgba(0, 255, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, .05) 75%, rgba(0, 255, 0, .05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            padding: 1.5rem;
+            border-bottom: 3px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+            50% { text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #00ff00;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00ff00;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            text-shadow: 0 0 10px #00ff00;
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-size: 1.5rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            text-shadow: 0 0 20px #00ff00;
+            margin-bottom: 1rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: transparent;
+            color: #00ff00;
+            text-decoration: none;
+            border: 2px solid #00ff00;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: #00ff00;
+            color: #0a0a0a;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .content-section {
+            max-width: 1000px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .mission-box {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 3px solid #00ff00;
+            padding: 3rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+        }
+
+        .mission-box h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 15px #00ff00;
+            text-align: center;
+        }
+
+        .mission-box p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #88ff88;
+            margin-bottom: 1rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .value-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 2px solid #00ff00;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 255, 0, 0.4);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #66ff66;
+        }
+
+        .value-card p {
+            color: #88ff88;
+            line-height: 1.6;
+        }
+
+        .developer-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            border-top: 3px solid #00ff00;
+            border-bottom: 3px solid #00ff00;
+        }
+
+        .developer-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .developer-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 3px solid #00ff00;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(0, 255, 0, 0.3);
+        }
+
+        .developer-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #00ff00;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+        }
+
+        .developer-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 15px #00ff00;
+        }
+
+        .developer-title {
+            font-size: 1.3rem;
+            color: #66ff66;
+            margin-bottom: 2rem;
+        }
+
+        .developer-info {
+            text-align: left;
+            margin: 2rem auto;
+            max-width: 500px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(0, 255, 0, 0.1);
+            border-left: 3px solid #00ff00;
+            border-radius: 5px;
+        }
+
+        .info-icon {
+            font-size: 1.5rem;
+        }
+
+        .info-item a {
+            color: #66ff66;
+            text-decoration: none;
+            transition: all 0.3s;
+            word-break: break-all;
+        }
+
+        .info-item a:hover {
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .story-section {
+            max-width: 1000px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .story-box {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 2px solid #00ff00;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+
+        .story-box h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 15px #00ff00;
+            text-align: center;
+        }
+
+        .story-box p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #88ff88;
+            margin-bottom: 1.5rem;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border-top: 3px solid #00ff00;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #66ff66;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .footer-text {
+            color: #88ff88;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: #1a1a1a;
+                padding: 1rem;
+                border-top: 2px solid #00ff00;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .mission-box, .story-box, .developer-card {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🎰 RETRO PIXEL SLOTS</div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="games.html">GAMES</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+                <li><a href="responsible.html">PLAY SAFE</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>📖 ABOUT US 📖</h1>
+        <p style="color: #66ff66; font-size: 1.2rem;">Learn about our mission and values</p>
+        <a href="index.html" class="back-button">← BACK TO HOME</a>
+    </section>
+
+    <section class="content-section">
+        <div class="mission-box">
+            <h2>🎯 OUR MISSION</h2>
+            <p>
+                Retro Pixel Slots was created with a clear and important purpose: to provide safe, entertaining alternatives to real-money gambling. We believe that people should be able to enjoy the excitement and entertainment of casino-style games without risking their hard-earned money or financial stability.
+            </p>
+            <p>
+                Every day, thousands of people lose significant amounts of money to online gambling and casinos. Our platform exists to help prevent these losses by offering a completely free, risk-free environment where you can experience the same thrills without any financial consequences.
+            </p>
+            <p>
+                We're not just building games – we're building awareness. Through our platform, we hope to educate people about the realities of gambling and provide a healthy alternative for entertainment.
+            </p>
+        </div>
+
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem; text-shadow: 0 0 15px #00ff00;">⭐ OUR CORE VALUES ⭐</h2>
+        
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">🛡️</div>
+                <h3>SAFETY FIRST</h3>
+                <p>Your financial and mental wellbeing is our top priority. We never ask for money and never will.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🎓</div>
+                <h3>EDUCATION</h3>
+                <p>We aim to educate users about responsible gaming and the real risks of gambling addiction.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">💚</div>
+                <h3>TRANSPARENCY</h3>
+                <p>We're honest about what we are – a demo platform with no real money involved, period.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🌍</div>
+                <h3>ACCESSIBILITY</h3>
+                <p>Free entertainment for everyone, everywhere. No barriers, no fees, no restrictions.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🎨</div>
+                <h3>QUALITY</h3>
+                <p>We create engaging, high-quality gaming experiences that rival real casino platforms.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🤝</div>
+                <h3>COMMUNITY</h3>
+                <p>Building a supportive community that values fun over financial risk.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="developer-section">
+        <div class="developer-container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 3rem; text-shadow: 0 0 15px #00ff00;">👨‍💻 MEET THE DEVELOPER 👨‍💻</h2>
+            <div class="developer-card">
+                <div class="developer-avatar">👨‍💻</div>
+                <h2>Nurlan Məmmədli</h2>
+                <p class="developer-title">Frontend Developer</p>
+                <p style="color: #88ff88; line-height: 1.6; margin-bottom: 2rem;">
+                    Passionate about creating meaningful web experiences that make a positive impact. Specializing in modern frontend technologies and user-centric design.
+                </p>
+                <div class="developer-info">
+                    <div class="info-item">
+                        <span class="info-icon">📧</span>
+                        <a href="mailto:nurlanmammadli2@gmail.com">nurlanmammadli2@gmail.com</a>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">💼</span>
+                        <a href="https://www.linkedin.com/in/nurlan-məmmədli-b6a55b308" target="_blank">LinkedIn Profile</a>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">🎯</span>
+                        <span style="color: #88ff88;">Frontend Development Intern</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="story-section">
+        <div class="story-box">
+            <h2>📚 OUR STORY</h2>
+            <p>
+                Retro Pixel Slots was born from a simple observation: too many people were losing money they couldn't afford to lose in online casinos and gambling platforms. As a frontend developer, I realized I could use my skills to create something that would help address this problem.
+            </p>
+            <p>
+                The concept is straightforward – create demo casino experiences that are just as engaging and entertaining as real gambling sites, but without any financial risk. By offering free alternatives, we hope to satisfy the desire for entertainment while protecting people's finances.
+            </p>
+            <p>
+                This project is part of a 30-day development challenge where we're creating 30 different demo casino websites, each with unique themes and designs. The goal is to showcase that safe, responsible entertainment is possible and can be just as exciting as real gambling.
+            </p>
+            <p>
+                Every site in this series emphasizes the same core message: play for fun, not for money. Learn the games, enjoy the experience, but protect your wallet and your future.
+            </p>
+            <p>
+                We believe that by providing quality alternatives and raising awareness about gambling risks, we can make a real difference in people's lives. If even one person chooses our free platform over a real casino and saves their money, we've succeeded.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="responsible.html">Responsible Gaming</a>
+        </div>
+        <div class="footer-text">
+            <p>© 2025 Retro Pixel Slots - Demo Entertainment Platform</p>
+            <p>⚠️ No Real Money Involved | For Entertainment Only | 18+ ⚠️</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
