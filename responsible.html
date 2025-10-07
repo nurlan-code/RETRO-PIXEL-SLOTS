@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsible Gaming - Retro Pixel Slots</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(0, 255, 0, .05) 25%, rgba(0, 255, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, .05) 75%, rgba(0, 255, 0, .05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(0, 255, 0, .05) 25%, rgba(0, 255, 0, .05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, .05) 75%, rgba(0, 255, 0, .05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            padding: 1.5rem;
+            border-bottom: 3px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+            50% { text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #00ff00;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00ff00;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            text-shadow: 0 0 10px #00ff00;
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-size: 1.5rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            text-shadow: 0 0 20px #00ff00;
+            margin-bottom: 1rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: transparent;
+            color: #00ff00;
+            text-decoration: none;
+            border: 2px solid #00ff00;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: #00ff00;
+            color: #0a0a0a;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .content-container {
+            max-width: 1000px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .responsible-box {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 3px solid #00ff00;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+            margin-bottom: 3rem;
+        }
+
+        .responsible-box h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: #66ff66;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .responsible-box p {
+            color: #88ff88;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .responsible-box ul {
+            color: #88ff88;
+            margin: 1rem 0 1rem 2rem;
+            line-height: 1.8;
+        }
+
+        .responsible-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: linear-gradient(90deg, #ff4444 0%, #ff6666 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+            border: 3px solid #ff0000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .warning-box h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .warning-box p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .info-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #66ff66;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .resource-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 2px solid #00ff00;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 0, 0.4);
+        }
+
+        .resource-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .resource-card h3 {
+            color: #66ff66;
+            margin-bottom: 1rem;
+        }
+
+        .resource-card p {
+            color: #88ff88;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .resource-link {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #00ff00;
+            color: #0a0a0a;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .resource-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border-top: 3px solid #00ff00;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #66ff66;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .footer-text {
+            color: #88ff88;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: #1a1a1a;
+                padding: 1rem;
+                border-top: 2px solid #00ff00;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .responsible-box {
+                padding: 2rem;
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🎰 RETRO PIXEL SLOTS</div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="games.html">GAMES</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+                <li><a href="responsible.html">PLAY SAFE</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>🛡️ RESPONSIBLE GAMING 🛡️</h1>
+        <p style="color: #66ff66; font-size: 1.2rem;">Your wellbeing is our priority</p>
+        <a href="index.html" class="back-button">← BACK TO HOME</a>
+    </section>
+
+    <div class="content-container">
+        <div class="warning-box">
+            <h2>⚠️ IMPORTANT MESSAGE</h2>
+            <p>
+                While Retro Pixel Slots involves NO REAL MONEY, we recognize that gambling addiction is a serious issue affecting millions worldwide. If you or someone you know has a gambling problem, please seek help immediately.
+            </p>
+        </div>
+
+        <div class="responsible-box">
+            <h2>🎯 OUR COMMITMENT</h2>
+            <p>
+                Retro Pixel Slots was created specifically to provide a safe alternative to real-money gambling. Our entire purpose is to prevent the financial and emotional harm caused by gambling addiction.
+            </p>
+            <p>
+                This platform exists to demonstrate that entertainment doesn't require risking your hard-earned money. We believe that by offering free, engaging alternatives, we can help reduce gambling-related harm.
+            </p>
+
+            <h2>🚨 WARNING SIGNS OF GAMBLING ADDICTION</h2>
+            <p>Gambling becomes a problem when it causes harm to you or others. Watch for these signs:</p>
+            <ul>
+                <li>Spending more money or time gambling than you can afford</li>
+                <li>Having trouble controlling or stopping gambling behavior</li>
+                <li>Lying to family or friends about gambling</li>
+                <li>Borrowing money or selling possessions to gamble</li>
+                <li>Feeling restless or irritable when trying to stop</li>
+                <li>Gambling to escape problems or negative feelings</li>
+                <li>Chasing losses by gambling more to win back money</li>
+                <li>Neglecting work, family, or personal responsibilities</li>
+                <li>Relationship problems caused by gambling</li>
+                <li>Financial difficulties due to gambling losses</li>
+            </ul>
+
+            <h2>💡 HEALTHY ENTERTAINMENT HABITS</h2>
+            <p>Whether using our demo platform or engaging in any entertainment, practice these healthy habits:</p>
+            <ul>
+                <li><strong>Set Time Limits:</strong> Decide in advance how long you'll play</li>
+                <li><strong>Never Chase Losses:</strong> Accept that losses happen and move on</li>
+                <li><strong>Balance Activities:</strong> Maintain diverse hobbies and interests</li>
+                <li><strong>Stay Social:</strong> Engage with friends and family regularly</li>
+                <li><strong>Be Honest:</strong> Talk openly about your entertainment habits</li>
+                <li><strong>Recognize Triggers:</strong> Understand what prompts excessive behavior</li>
+                <li><strong>Take Breaks:</strong> Step away regularly to maintain perspective</li>
+            </ul>
+
+            <h2>🎓 EDUCATION IS PREVENTION</h2>
+            <p>
+                Understanding gambling mechanics and odds is crucial. Real casinos and gambling sites are designed to ensure the house always wins in the long run. The odds are mathematically stacked against players.
+            </p>
+            <div class="info-box">
+                <h3>Key Facts About Gambling:</h3>
+                <p>• The house edge means you will lose money over time</p>
+                <p>• "Hot streaks" and "lucky systems" are illusions</p>
+                <p>• Casinos profit from people's losses</p>
+                <p>• No strategy can overcome mathematical disadvantages</p>
+                <p>• Gambling should never be considered income</p>
+            </div>
+
+            <h2>👨‍👩‍👧‍👦 FOR FAMILIES AND FRIENDS</h2>
+            <p>If someone you care about has a gambling problem:</p>
+            <ul>
+                <li>Express concern without judgment</li>
+                <li>Encourage them to seek professional help</li>
+                <li>Avoid enabling behavior (lending money, covering debts)</li>
+                <li>Set boundaries to protect yourself financially</li>
+                <li>Offer emotional support during recovery</li>
+                <li>Educate yourself about gambling addiction</li>
+            </ul>
+        </div>
+
+        <h2 style="text-align: center; font-size: 2.5rem; margin: 3rem 0; text-shadow: 0 0 15px #00ff00;">📞 HELP RESOURCES</h2>
+        
+        <div class="resource-grid">
+            <div class="resource-card">
+                <div class="resource-icon">🆘</div>
+                <h3>National Council on Problem Gambling</h3>
+                <p>24/7 confidential helpline for gambling addiction support</p>
+                <p style="font-weight: bold; color: #00ff00;">1-800-522-4700</p>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">💬</div>
+                <h3>Gamblers Anonymous</h3>
+                <p>Free peer support program with meetings worldwide</p>
+                <p style="font-weight: bold; color: #00ff00;">www.gamblersanonymous.org</p>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">🌐</div>
+                <h3>SAMHSA National Helpline</h3>
+                <p>Mental health and substance abuse treatment referral</p>
+                <p style="font-weight: bold; color: #00ff00;">1-800-662-4357</p>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">🏥</div>
+                <h3>Crisis Text Line</h3>
+                <p>Free 24/7 support via text message</p>
+                <p style="font-weight: bold; color: #00ff00;">Text HOME to 741741</p>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">💰</div>
+                <h3>Financial Counseling</h3>
+                <p>Nonprofit credit counseling for debt management</p>
+                <p style="font-weight: bold; color: #00ff00;">NFCC: 1-800-388-2227</p>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">👥</div>
+                <h3>Gam-Anon</h3>
+                <p>Support for family members affected by gambling</p>
+                <p style="font-weight: bold; color: #00ff00;">www.gam-anon.org</p>
+            </div>
+        </div>
+
+        <div class="responsible-box">
+            <h2>🤝 OUR PROMISE</h2>
+            <p>
+                Retro Pixel Slots will NEVER ask for money, NEVER promote real gambling, and will ALWAYS remain a free, safe entertainment platform. Our mission is harm prevention, not profit.
+            </p>
+            <p>
+                If you find yourself spending excessive time on demo gambling platforms, it may be a sign to reevaluate your entertainment choices. Even free games should be enjoyed in moderation.
+            </p>
+            <p>
+                Remember: Entertainment should add joy to your life, not create stress, financial problems, or relationship issues. Your wellbeing matters more than any game.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="responsible.html">Responsible Gaming</a>
+        </div>
+        <div class="footer-text">
+            <p>© 2025 Retro Pixel Slots - Demo Entertainment Platform</p>
+            <p>⚠️ No Real Money Involved | For Entertainment Only | 18+ ⚠️</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
